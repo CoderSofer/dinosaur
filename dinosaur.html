@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!-- DINOSAUR PAGE -->
+<html lang="en-GB">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Hello There...</title>
+	<!-- Load Vue -->
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<!-- CSS Styles -->
+	<style type="text/css">
+		/* bODY AND HTML */
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+		}
+
+		/* Boxes */
+		#app {
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+
+		/* Output */
+		hr {
+			width: 500px;
+		}
+	</style>
+</head>
+
+<!-- Main body -->
+
+<body>
+
+	<!-- Text -->
+	<div id="app">
+
+
+		<!-- Search Form -->
+		<form id="search">
+			<!-- Search name -->
+			Search Name: <input name="query" v-model="searchQuery">
+			<!-- Sort age with .prevent to stop it submitting twice -->
+			<button @click.prevent="toggleSortOrder">Sort by Age ({{ sortOrder === 'asc' ? 'Ascending' : 'Descending' }})</button>
+
+		</form>
+
+		<!-- Table -->
+		<div>
+			<table>
+				<!-- Columns -->
+				<thead>
+					<tr>
+						<th v-for="column in gridColumns" :key="column">{{ column }}</th>
+					</tr>
+				</thead>
+				<!-- Rows -->
+				<tbody>
+					<tr v-for="row in filteredDinoData" :key="row.name">
+						<td>{{ row.name }}</td>
+						<td>{{ row.type }}</td>
+						<td>{{ row.age }}</td>
+						<td>{{ row.isAlive }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+
+		<!-- Button to go to index.html -->
+		<button @click="goToHome">Go to Home Page</button>
+	</div>
+
+	<!-- JS -->
+	<script type="text/javascript">
+		// Grab the create app function from global vue object
+		const { createApp } = Vue
+		// Create new vue application
+		createApp({
+			// Returns object with app's reactive state
+			data() {
+
+				return {
+					// Search Query - for the name
+					searchQuery: '',
+					// Column names
+					gridColumns: ['Name', 'Type', 'Age', 'isAlive'],
+					// Data
+					dinoData: [
+						{ name: "Littlefoot", type: "Brontosaurus", age: 145500000, isAlive: false },
+						{ name: "Steve", type: "Operations Director", age: 44, isAlive: true },
+						{ name: "Barry", type: "Release Dinosaur", age: 44, isAlive: false },
+						{ name: "Non-Trademark-Violating-Zilla", type: "Godlike", age: 64, isAlive: false }
+					],
+					// Default sort order = ascending
+					sortOrder: 'asc'
+
+				}
+			},
+
+			// Use computed instead of methods because it only runs when changes are made
+			computed: {
+				// Filter the dino data
+				filteredDinoData() {
+					// Get search query
+					const searchQuery = this.searchQuery.toLowerCase();
+					// Apply search filter see if the row fulils the search query
+					const filteredData = this.dinoData.filter(row =>
+						row.name.toLowerCase().includes(searchQuery)
+					);
+					// Apply sorting after filtering
+					return filteredData.sort((a, b) => {
+						return this.sortOrder === 'asc' ? a.age - b.age : b.age - a.age;
+					});
+
+				},
+			},
+
+
+			// Methods to handle events - re-evaluated every time it re-renders
+			methods: {
+				// Method to navigate to index.html
+				goToHome() {
+					window.location.href = "index.html";
+				},
+				// Method to toggle sort order between ascending and descending
+				toggleSortOrder() {
+					this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+				}
+			}
+
+			// Mounts vue application to the app tag, making it change
+		}).mount('#app')
+	</script>
+</body>
+
+</html>

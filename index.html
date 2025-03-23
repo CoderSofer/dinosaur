@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!-- EXAMPLE PAGE -->
+<html lang="en-GB">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Hello There...</title>
+	<!-- Load Vue -->
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<!-- CSS Styles -->
+	<style type="text/css">
+		/* bODY AND HTML */
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+		}
+
+		/* Boxes */
+		#app {
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+
+		/* Output */
+		hr {
+			width: 500px;
+		}
+	</style>
+</head>
+
+<!-- Main body -->
+
+<body>
+	<!-- Text -->
+	<div id="app">
+		<div>
+			<label for="forename-field">What is your name?</label>
+			<!-- Input -->
+			<input id="forename-field" type="text" name="forename" v-model="forename" />
+		</div>
+		<hr />
+		<!-- Output -->
+		<p>Hello {{forename}}</p>
+
+		<!-- Button to go to dinosaur.html -->
+		<button @click="goToDinosaur">Go to Dinosaur Page</button>
+	</div>
+
+	<!-- JS -->
+	<script type="text/javascript">
+		// Grab the create app function from global vue object
+		const { createApp } = Vue
+		// Create new vue application
+		createApp({
+			// Returns object with app's reactive state
+			data() {
+				// Returns forename input
+				return {
+					forename: ''
+				}
+			},
+
+			// Methods to handle events
+			methods: {
+				// Method to navigate to dinosaur.html
+				goToDinosaur() {
+					window.location.href = "dinosaur.html";
+				}
+			}
+
+			// Mounts vue application to the app tag, making it change
+		}).mount('#app')
+	</script>
+</body>
+
+</html>

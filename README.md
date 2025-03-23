@@ -1,2 +1,4 @@
 # dinosaur
-Dinosaur List
+Dinosaur List - List of dinosaurs.
+- Sort by age
+- Filter by name

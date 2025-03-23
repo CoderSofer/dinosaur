@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+<!-- EXAMPLE PAGE -->
 <html lang="en-GB">
+
 <head>
 	<meta charset="utf-8" />
 	<title>Hello There...</title>
@@ -32,6 +34,7 @@
 </head>
 
 <!-- Main body -->
+
 <body>
 	<!-- Text -->
 	<div id="app">
@@ -43,6 +46,9 @@
 		<hr />
 		<!-- Output -->
 		<p>Hello {{forename}}</p>
+
+		<!-- Button to go to dinosaur.html -->
+		<button @click="goToDinosaur">Go to Dinosaur Page</button>
 	</div>
 
 	<!-- JS -->
@@ -57,7 +63,16 @@
 				return {
 					forename: ''
 				}
+			},
+
+			// Methods to handle events
+			methods: {
+				// Method to navigate to dinosaur.html
+				goToDinosaur() {
+					window.location.href = "dinosaur.html";
+				}
 			}
+
 			// Mounts vue application to the app tag, making it change
 		}).mount('#app')
 	</script>
